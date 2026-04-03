@@ -100,7 +100,28 @@ export default function FreeAuditPage() {
     goals: "",
   });
 
+  const [error, setError] = useState("");
+
+  const validateStep = (): string | null => {
+    if (step === 1) {
+      if (!/^https?:\/\//.test(auditData.website)) return "Please enter a valid website URL (starting with http:// or https://).";
+    }
+    if (step === 2) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(auditData.email)) return "Please enter a valid email address.";
+      const digits = auditData.phone.replace(/\D/g, "");
+      if (digits.length < 10) return "Phone number must have at least 10 digits.";
+    }
+    return null;
+  };
+
   const goNext = async () => {
+    setError("");
+    const validationError = validateStep();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     if (step < 3) {
       setDirection(1);
       setStep(step + 1);
@@ -287,6 +308,11 @@ export default function FreeAuditPage() {
 
                 {/* Form Steps */}
                 <div className="glass rounded-2xl p-6 md:p-8 overflow-hidden">
+                  {error && (
+                    <div className="flex items-center gap-2 p-3 mb-5 rounded-lg bg-tertiary/10 border border-tertiary/30 text-tertiary text-sm">
+                      {error}
+                    </div>
+                  )}
                   <AnimatePresence mode="wait" custom={direction}>
                     {step === 1 && (
                       <motion.div
