@@ -52,7 +52,7 @@ export default function ContactForm({
 
     setLoading(true);
     try {
-      const res = await fetch("https://formsubmit.co/ajax/manavgodhani.business@gmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/4036c2247fbd93c09537e42d154efe39", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
