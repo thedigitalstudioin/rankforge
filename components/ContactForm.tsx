@@ -52,21 +52,26 @@ export default function ContactForm({
 
     setLoading(true);
     try {
-      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || "";
-      if (GOOGLE_SCRIPT_URL) {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...formData,
-            formType,
-            page: page || window.location.pathname,
-            timestamp: new Date().toISOString(),
-          }),
-        });
+      const res = await fetch("https://formsubmit.co/ajax/manavgodhani.business@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `New ${formType} form submission — RankForge`,
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone,
+          Website: formData.website,
+          Message: formData.message || "N/A",
+          "Form Type": formType,
+          "Page": page || window.location.pathname,
+          _template: "table",
+        }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError("Something went wrong. Please try again.");
       }
-      setSubmitted(true);
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {

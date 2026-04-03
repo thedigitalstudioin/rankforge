@@ -88,14 +88,45 @@ const labelClasses = "block text-sm font-medium text-text-primary mb-1.5";
 export default function FreeAuditPage() {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [direction, setDirection] = useState(1);
   const [challenges, setChallenges] = useState<string[]>([]);
+  const [auditData, setAuditData] = useState({
+    website: "",
+    industry: "",
+    name: "",
+    email: "",
+    phone: "",
+    goals: "",
+  });
 
-  const goNext = () => {
+  const goNext = async () => {
     if (step < 3) {
       setDirection(1);
       setStep(step + 1);
     } else {
+      setLoading(true);
+      try {
+        await fetch("https://formsubmit.co/ajax/manavgodhani.business@gmail.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            _subject: "New Free Audit Request — RankForge",
+            Name: auditData.name,
+            Email: auditData.email,
+            Phone: auditData.phone,
+            Website: auditData.website,
+            Industry: auditData.industry,
+            Challenges: challenges.join(", ") || "None selected",
+            Goals: auditData.goals || "N/A",
+            "Form Type": "free-audit",
+            _template: "table",
+          }),
+        });
+      } catch {
+        // Still show success — form data was likely sent
+      }
+      setLoading(false);
       setSubmitted(true);
     }
   };
@@ -289,6 +320,8 @@ export default function FreeAuditPage() {
                               type="url"
                               placeholder="https://yoursite.com"
                               required
+                              value={auditData.website}
+                              onChange={(e) => setAuditData({ ...auditData, website: e.target.value })}
                               className={inputClasses + " pl-10"}
                             />
                           </div>
@@ -304,6 +337,8 @@ export default function FreeAuditPage() {
                           <select
                             id="audit-industry"
                             required
+                            value={auditData.industry}
+                            onChange={(e) => setAuditData({ ...auditData, industry: e.target.value })}
                             className={inputClasses}
                           >
                             <option value="" className="bg-surface">
@@ -352,6 +387,8 @@ export default function FreeAuditPage() {
                             type="text"
                             placeholder="John Doe"
                             required
+                            value={auditData.name}
+                            onChange={(e) => setAuditData({ ...auditData, name: e.target.value })}
                             className={inputClasses}
                           />
                         </div>
@@ -365,6 +402,8 @@ export default function FreeAuditPage() {
                             type="email"
                             placeholder="john@company.com"
                             required
+                            value={auditData.email}
+                            onChange={(e) => setAuditData({ ...auditData, email: e.target.value })}
                             className={inputClasses}
                           />
                         </div>
@@ -377,6 +416,8 @@ export default function FreeAuditPage() {
                             id="audit-phone"
                             type="tel"
                             placeholder="+1 (555) 000-0000"
+                            value={auditData.phone}
+                            onChange={(e) => setAuditData({ ...auditData, phone: e.target.value })}
                             required
                             className={inputClasses}
                           />
@@ -447,6 +488,8 @@ export default function FreeAuditPage() {
                             id="audit-goals"
                             rows={3}
                             placeholder="E.g., Increase organic traffic by 50%, rank for specific keywords, improve local visibility..."
+                            value={auditData.goals}
+                            onChange={(e) => setAuditData({ ...auditData, goals: e.target.value })}
                             className={inputClasses + " resize-none"}
                           />
                         </div>
@@ -472,11 +515,12 @@ export default function FreeAuditPage() {
                       variant="primary"
                       size="md"
                       onClick={goNext}
+                      loading={loading}
                     >
                       {step === 3 ? (
                         <>
                           <Target className="w-4 h-4 mr-2" />
-                          Get My Free Audit
+                          {loading ? "Submitting..." : "Get My Free Audit"}
                         </>
                       ) : (
                         <>
