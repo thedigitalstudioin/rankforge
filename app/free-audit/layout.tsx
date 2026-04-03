@@ -2,16 +2,26 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Free SEO Audit — Get Your Comprehensive Report in 24 Hours",
+  title: "Free SEO Audit — Get Your Report Today | RankForge",
   description:
-    "Get a free, comprehensive SEO audit for your website in just 24 hours. Includes technical health score, keyword opportunities, competitor analysis, and a priority action plan.",
+    "Get a comprehensive free SEO audit for your website in 24 hours. Technical analysis, keyword opportunities and action plan included.",
   openGraph: {
-    title: "Free SEO Audit — Get Your Comprehensive Report in 24 Hours",
+    title: "Free SEO Audit — Get Your Report Today | RankForge",
     description:
-      "Get a free, comprehensive SEO audit for your website in just 24 hours.",
+      "Get a comprehensive free SEO audit for your website in 24 hours. Technical analysis, keyword opportunities and action plan included.",
     url: `${SITE.url}/free-audit`,
     siteName: SITE.name,
+    locale: "en_US",
     type: "website",
+    images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: "Free SEO Audit by RankForge" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free SEO Audit — Get Your Report Today | RankForge",
+    description:
+      "Get a comprehensive free SEO audit for your website in 24 hours. Technical analysis, keyword opportunities and action plan included.",
+    images: [`${SITE.url}/og-image.png`],
+    creator: "@rankforge",
   },
 };
 

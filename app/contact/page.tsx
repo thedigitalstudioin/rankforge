@@ -7,16 +7,26 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact RankForge — Start Your SEO Journey Today",
+  title: "Contact Us — Get a Free Consultation | RankForge",
   description:
-    "Get in touch with RankForge to start your SEO journey. Free initial consultation, response within 24 hours. Contact us by email, phone, or schedule a call.",
+    "Get in touch with RankForge for a free SEO consultation. We respond within 24 hours. Call, email, or fill out our contact form today.",
   openGraph: {
-    title: "Contact RankForge — Start Your SEO Journey Today",
+    title: "Contact Us — Get a Free Consultation | RankForge",
     description:
-      "Get in touch with RankForge to start your SEO journey. Free initial consultation.",
+      "Get in touch with RankForge for a free SEO consultation. We respond within 24 hours. Call, email, or fill out our contact form today.",
     url: `${SITE.url}/contact`,
     siteName: SITE.name,
+    locale: "en_US",
     type: "website",
+    images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: "Contact RankForge" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us — Get a Free Consultation | RankForge",
+    description:
+      "Get in touch with RankForge for a free SEO consultation. We respond within 24 hours. Call, email, or fill out our contact form today.",
+    images: [`${SITE.url}/og-image.png`],
+    creator: "@rankforge",
   },
 };
 

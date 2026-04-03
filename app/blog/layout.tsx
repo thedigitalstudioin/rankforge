@@ -2,16 +2,26 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "SEO Blog — Insights, Tips & Industry Resources",
+  title: "SEO Blog — Tips, Guides & Insights | RankForge",
   description:
-    "Stay ahead of the curve with RankForge's SEO blog. Expert insights, actionable tips, technical guides, and industry resources to boost your search rankings.",
+    "Read the latest SEO tips, strategies and industry insights on the RankForge blog. Actionable guides to improve your search rankings.",
   openGraph: {
-    title: "SEO Blog — Insights, Tips & Industry Resources",
+    title: "SEO Blog — Tips, Guides & Insights | RankForge",
     description:
-      "Expert SEO insights, actionable tips, and industry resources from the RankForge team.",
+      "Read the latest SEO tips, strategies and industry insights on the RankForge blog. Actionable guides to improve your search rankings.",
     url: `${SITE.url}/blog`,
     siteName: SITE.name,
+    locale: "en_US",
     type: "website",
+    images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: "RankForge SEO Blog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SEO Blog — Tips, Guides & Insights | RankForge",
+    description:
+      "Read the latest SEO tips, strategies and industry insights on the RankForge blog. Actionable guides to improve your search rankings.",
+    images: [`${SITE.url}/og-image.png`],
+    creator: "@rankforge",
   },
 };
 

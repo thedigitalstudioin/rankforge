@@ -28,8 +28,8 @@ export async function generateMetadata({
   const country = getCountry(countrySlug);
   if (!service || !country) return {};
 
-  const title = `${service.title} Services in ${country.name} | ${SITE.name}`;
-  const description = `Top-rated ${service.metaKeyword} for ${country.name} businesses. Serving ${country.cities.length}+ cities across ${country.name}. Get your free SEO audit now!`;
+  const title = `${service.title} in ${country.name} | RankForge`.slice(0, 60);
+  const description = `Expert ${service.shortTitle} services in ${country.name}. We help ${country.name} businesses dominate Google search. Free consultation. Transparent pricing.`.slice(0, 160);
   const url = `${SITE.url}/services/${serviceSlug}/${countrySlug}`;
 
   return {
@@ -42,11 +42,15 @@ export async function generateMetadata({
       url,
       type: "website",
       siteName: SITE.name,
+      locale: "en_US",
+      images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${SITE.url}/og-image.png`],
+      creator: "@rankforge",
     },
   };
 }

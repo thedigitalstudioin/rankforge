@@ -2,14 +2,26 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Case Studies — Proven SEO Results & Client Success Stories",
+  title: "SEO Case Studies — Proven Results | RankForge",
   description:
-    "See how RankForge delivers measurable SEO results. Explore real case studies with before-and-after metrics from clients across e-commerce, SaaS, healthcare, and more.",
+    "See real SEO results from RankForge clients. Case studies showing 340%+ traffic growth and proven ranking improvements. Results that speak.",
   openGraph: {
-    title: "Case Studies — Proven SEO Results & Client Success Stories",
+    title: "SEO Case Studies — Proven Results | RankForge",
     description:
-      "See how RankForge delivers measurable SEO results. Explore real case studies with before-and-after metrics from clients across e-commerce, SaaS, healthcare, and more.",
+      "See real SEO results from RankForge clients. Case studies showing 340%+ traffic growth and proven ranking improvements. Results that speak.",
     url: `${SITE.url}/case-studies`,
+    siteName: SITE.name,
+    locale: "en_US",
+    type: "website",
+    images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: "RankForge Case Studies" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SEO Case Studies — Proven Results | RankForge",
+    description:
+      "See real SEO results from RankForge clients. Case studies showing 340%+ traffic growth and proven ranking improvements. Results that speak.",
+    images: [`${SITE.url}/og-image.png`],
+    creator: "@rankforge",
   },
 };
 

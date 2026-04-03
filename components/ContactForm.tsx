@@ -2,33 +2,76 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, CheckCircle } from "lucide-react";
-import { SERVICES } from "@/lib/constants";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
-
-const BUDGET_RANGES = [
-  "$1K - $2.5K",
-  "$2.5K - $5K",
-  "$5K - $10K",
-  "$10K+",
-];
 
 const inputClasses =
   "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm";
 
 const labelClasses = "block text-sm font-medium text-text-primary mb-1.5";
 
-export default function ContactForm() {
+interface ContactFormProps {
+  formType?: string;
+  page?: string;
+}
+
+export default function ContactForm({
+  formType = "contact",
+  page = "",
+}: ContactFormProps) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    website: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const validateForm = (): string | null => {
+    if (!formData.name.trim()) return "Full name is required.";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) return "Please enter a valid email address.";
+    const digits = formData.phone.replace(/\D/g, "");
+    if (digits.length < 10) return "Phone number must have at least 10 digits.";
+    if (!/^https?:\/\//.test(formData.website)) return "Website must start with http:// or https://";
+    return null;
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const GOOGLE_SCRIPT_URL = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL || "";
+      if (GOOGLE_SCRIPT_URL) {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            formType,
+            page: page || window.location.pathname,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      }
       setSubmitted(true);
-    }, 1500);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,28 +108,39 @@ export default function ContactForm() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
+          {error && (
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-tertiary/10 border border-tertiary/30 text-tertiary text-sm">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              {error}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label htmlFor="name" className={labelClasses}>
-                Name *
+                Full Name *
               </label>
               <input
                 id="name"
                 type="text"
                 placeholder="John Doe"
                 required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={inputClasses}
               />
             </div>
             <div>
               <label htmlFor="email" className={labelClasses}>
-                Email *
+                Email Address *
               </label>
               <input
                 id="email"
                 type="email"
                 placeholder="john@company.com"
                 required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className={inputClasses}
               />
             </div>
@@ -95,89 +149,44 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label htmlFor="phone" className={labelClasses}>
-                Phone *
+                Phone Number *
               </label>
               <input
                 id="phone"
                 type="tel"
                 placeholder="+1 (555) 000-0000"
                 required
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className={inputClasses}
               />
             </div>
             <div>
-              <label htmlFor="company" className={labelClasses}>
-                Company *
+              <label htmlFor="website" className={labelClasses}>
+                Website URL *
               </label>
               <input
-                id="company"
-                type="text"
-                placeholder="Your Company"
+                id="website"
+                type="url"
+                placeholder="https://yoursite.com"
                 required
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                 className={inputClasses}
               />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="website" className={labelClasses}>
-              Website URL *
-            </label>
-            <input
-              id="website"
-              type="url"
-              placeholder="https://yoursite.com"
-              required
-              className={inputClasses}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="service" className={labelClasses}>
-                Service Interested In *
-              </label>
-              <select id="service" required className={inputClasses}>
-                <option value="" className="bg-surface">
-                  Select a service
-                </option>
-                {SERVICES.map((service) => (
-                  <option
-                    key={service.slug}
-                    value={service.title}
-                    className="bg-surface"
-                  >
-                    {service.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="budget" className={labelClasses}>
-                Budget Range *
-              </label>
-              <select id="budget" required className={inputClasses}>
-                <option value="" className="bg-surface">
-                  Select budget
-                </option>
-                {BUDGET_RANGES.map((range) => (
-                  <option key={range} value={range} className="bg-surface">
-                    {range}
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
 
           <div>
             <label htmlFor="message" className={labelClasses}>
-              Message *
+              Message
             </label>
             <textarea
               id="message"
               rows={4}
               placeholder="Tell us about your project and goals..."
-              required
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className={inputClasses + " resize-none"}
             />
           </div>
@@ -190,7 +199,7 @@ export default function ContactForm() {
             className="w-full"
           >
             <Send className="w-4 h-4 mr-2" />
-            Send Message
+            {loading ? "Sending..." : "Send Message"}
           </GradientButton>
         </motion.form>
       )}

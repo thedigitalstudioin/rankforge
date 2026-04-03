@@ -1,0 +1,22 @@
+# RankForge — SEO Agency
+
+## About
+RankForge is a global SEO agency providing on-page SEO, technical SEO, link building, local SEO, content strategy, and SEO audit services.
+
+## Website
+https://seo-rankforge.pages.dev
+
+## Services
+- On-Page SEO: Meta tags, content optimization, keyword placement, internal linking, schema markup
+- Technical SEO: Site speed, Core Web Vitals, crawlability, indexation, mobile-friendliness
+- Link Building: High-authority backlinks, guest posting, digital PR, competitor analysis
+- Local SEO: Google Business Profile, local citations, review management, map pack ranking
+- Content Strategy: Keyword research, content calendar, blog writing, topic clusters, E-E-A-T
+- SEO Audit: Comprehensive site audits, competitor analysis, keyword gap analysis, technical reports
+
+## Service Areas
+USA (150+ cities), UK (50+ cities), Canada (40+ cities), Australia (30+ cities), Germany (40+ cities), UAE (10+ cities), India (30+ cities), and 13 more countries worldwide.
+
+## Contact
+Website: https://seo-rankforge.pages.dev/contact
+Free Audit: https://seo-rankforge.pages.dev/free-audit

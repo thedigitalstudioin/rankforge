@@ -13,7 +13,7 @@ export const SITE = {
   tagline: "We Don't Just Rank. We Dominate.",
   description:
     "RankForge is a premium SEO agency helping businesses dominate search rankings with data-driven strategies, technical excellence, and measurable results.",
-  url: "https://rankforge.com",
+  url: "https://seo-rankforge.pages.dev",
   email: "hello@rankforge.com",
   phone: "+1 (555) 123-4567",
   address: "123 Digital Drive, Suite 500, San Francisco, CA 94105",

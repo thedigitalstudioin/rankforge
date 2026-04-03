@@ -3,14 +3,26 @@ import { SITE, SERVICES } from "@/lib/constants";
 import ServicesPageClient from "./ServicesPageClient";
 
 export const metadata: Metadata = {
-  title: "SEO Services — Comprehensive Solutions for Search Dominance",
+  title: "Our SEO Services — Full-Service SEO | RankForge",
   description:
-    "Explore RankForge's full suite of SEO services: on-page SEO, technical SEO, link building, local SEO, content strategy, and SEO audits.",
+    "Explore RankForge's full suite of SEO services. On-page, technical, link building, local SEO, content strategy & audits. Get a free audit today!",
   openGraph: {
-    title: "SEO Services — Comprehensive Solutions for Search Dominance",
+    title: "Our SEO Services — Full-Service SEO | RankForge",
     description:
-      "Explore RankForge's full suite of SEO services: on-page SEO, technical SEO, link building, local SEO, content strategy, and SEO audits.",
+      "Explore RankForge's full suite of SEO services. On-page, technical, link building, local SEO, content strategy & audits. Get a free audit today!",
     url: `${SITE.url}/services`,
+    siteName: SITE.name,
+    locale: "en_US",
+    type: "website",
+    images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: "RankForge SEO Services" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our SEO Services — Full-Service SEO | RankForge",
+    description:
+      "Explore RankForge's full suite of SEO services. On-page, technical, link building, local SEO, content strategy & audits. Get a free audit today!",
+    images: [`${SITE.url}/og-image.png`],
+    creator: "@rankforge",
   },
 };
 

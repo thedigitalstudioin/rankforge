@@ -2,8 +2,10 @@ import type { MetadataRoute } from "next";
 import { SERVICE_SLUGS } from "@/data/services";
 import { ALL_COUNTRIES } from "@/data/countries";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://rankforge.com";
+  const baseUrl = "https://seo-rankforge.pages.dev";
   const now = new Date();
 
   // Static pages

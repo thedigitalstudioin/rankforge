@@ -34,8 +34,10 @@ export async function generateMetadata({
   if (!service || !result) return {};
 
   const { city, country } = result;
-  const title = `${service.title} Services in ${city.name} | ${SITE.name}`;
-  const description = `Expert ${service.metaKeyword} in ${city.name}, ${country.name}. Boost rankings for your ${city.name} business. Free audit + transparent pricing. Contact us today!`;
+  let title = `${service.shortTitle} in ${city.name} — Expert SEO | RankForge`;
+  if (title.length > 60) title = `${service.shortTitle} in ${city.name} | RankForge`;
+  if (title.length > 60) title = title.slice(0, 57) + "...";
+  const description = `${service.shortTitle} services in ${city.name}, ${country.name}. Local SEO experts helping ${city.name} businesses rank #1 on Google. Free audit available today!`.slice(0, 160);
   const url = `${SITE.url}/services/${serviceSlug}/${countrySlug}/${citySlug}`;
 
   return {
@@ -48,11 +50,15 @@ export async function generateMetadata({
       url,
       type: "website",
       siteName: SITE.name,
+      locale: "en_US",
+      images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${SITE.url}/og-image.png`],
+      creator: "@rankforge",
     },
   };
 }

@@ -27,8 +27,8 @@ export async function generateMetadata({
   const service = getServiceContent(serviceSlug);
   if (!service) return {};
 
-  const title = `${service.title} Services | Expert ${service.shortTitle} | ${SITE.name}`;
-  const description = `Professional ${service.metaKeyword} to boost your rankings. ${service.features.slice(0, 3).join(", ")} & more. Get a free audit today!`;
+  const title = `${service.title} Services | RankForge`.slice(0, 60);
+  const description = `Professional ${service.shortTitle} services to improve your search rankings. Proven results with 340% avg traffic growth. Get a free audit today!`.slice(0, 160);
   const url = `${SITE.url}/services/${serviceSlug}`;
 
   return {
@@ -41,11 +41,15 @@ export async function generateMetadata({
       url,
       type: "website",
       siteName: SITE.name,
+      locale: "en_US",
+      images: [{ url: `${SITE.url}/og-image.png`, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${SITE.url}/og-image.png`],
+      creator: "@rankforge",
     },
   };
 }

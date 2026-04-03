@@ -21,11 +21,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "RankForge — Premium SEO Agency | We Don't Just Rank. We Dominate.",
-    template: "%s | RankForge",
+    default: "SEO Services — Rank Higher, Convert More | RankForge",
+    template: "%s",
   },
   description:
-    "RankForge is a premium SEO agency helping businesses dominate search rankings with data-driven strategies, technical excellence, and measurable results. Get your free SEO audit today.",
+    "RankForge delivers expert SEO services to boost your Google rankings. 500+ businesses helped. Get your free SEO audit today!",
   keywords: [
     "SEO agency",
     "search engine optimization",
@@ -38,23 +38,24 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "RankForge" }],
   creator: "RankForge",
-  metadataBase: new URL("https://rankforge.com"),
+  metadataBase: new URL("https://seo-rankforge.pages.dev"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rankforge.com",
+    url: "https://seo-rankforge.pages.dev",
     siteName: "RankForge",
-    title: "RankForge — Premium SEO Agency",
+    title: "SEO Services — Rank Higher, Convert More | RankForge",
     description:
-      "We help businesses dominate search rankings with data-driven SEO strategies and measurable results.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+      "RankForge delivers expert SEO services to boost your Google rankings. 500+ businesses helped. Get your free SEO audit today!",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "RankForge SEO Agency" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RankForge — Premium SEO Agency",
+    title: "SEO Services — Rank Higher, Convert More | RankForge",
     description:
-      "We help businesses dominate search rankings with data-driven SEO strategies and measurable results.",
+      "RankForge delivers expert SEO services to boost your Google rankings. 500+ businesses helped. Get your free SEO audit today!",
     images: ["/og-image.png"],
+    creator: "@rankforge",
   },
   robots: {
     index: true,
