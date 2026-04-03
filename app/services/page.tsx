@@ -3,6 +3,7 @@ import { SITE, SERVICES } from "@/lib/constants";
 import ServicesPageClient from "./ServicesPageClient";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/services` },
   title: "Our SEO Services — Full-Service SEO | RankForge",
   description:
     "Explore RankForge's full suite of SEO services. On-page, technical, link building, local SEO, content strategy & audits. Get a free audit today!",

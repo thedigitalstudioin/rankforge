@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { FAQ_ITEMS, SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/pricing` },
   title: "SEO Pricing — Transparent Plans | RankForge",
   description:
     "Transparent SEO pricing plans starting at $999/mo. On-page SEO, technical SEO, link building and more. Compare plans and get started today.",

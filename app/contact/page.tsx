@@ -7,6 +7,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/contact` },
   title: "Contact Us — Get a Free Consultation | RankForge",
   description:
     "Get in touch with RankForge for a free SEO consultation. We respond within 24 hours. Call, email, or fill out our contact form today.",

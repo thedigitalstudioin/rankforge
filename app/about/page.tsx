@@ -3,6 +3,7 @@ import { SITE, TEAM_MEMBERS, COMPANY_VALUES } from "@/lib/constants";
 import AboutPageClient from "./AboutPageClient";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/about` },
   title: "About RankForge — Expert SEO Agency | RankForge",
   description:
     "Learn about RankForge — a results-driven SEO agency helping businesses worldwide rank higher and grow organic traffic. Meet our team.",

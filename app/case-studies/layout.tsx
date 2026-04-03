@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/case-studies` },
   title: "SEO Case Studies — Proven Results | RankForge",
   description:
     "See real SEO results from RankForge clients. Case studies showing 340%+ traffic growth and proven ranking improvements. Results that speak.",

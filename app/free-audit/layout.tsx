@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: `${SITE.url}/free-audit` },
   title: "Free SEO Audit — Get Your Report Today | RankForge",
   description:
     "Get a comprehensive free SEO audit for your website in 24 hours. Technical analysis, keyword opportunities and action plan included.",

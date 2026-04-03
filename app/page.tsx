@@ -9,6 +9,7 @@ import Testimonials from "@/components/home/Testimonials";
 import CTABanner from "@/components/home/CTABanner";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://seo-rankforge.pages.dev" },
   title: "SEO Services — Rank Higher, Convert More | RankForge",
   description:
     "RankForge delivers expert SEO services to boost your Google rankings. 500+ businesses helped. Get your free SEO audit today!",
