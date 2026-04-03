@@ -1,0 +1,131 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { SITE } from "@/lib/constants";
+import { getServiceContent } from "@/data/services";
+import { getCity, getAllCityParams, getNearbyCities } from "@/data/countries";
+import { generateCityPageContent } from "@/data/content-generators";
+import { orchestrateCitySections } from "@/data/section-orchestrator";
+import {
+  BreadcrumbSchema,
+  ServiceSchema,
+  FAQSchema,
+  LocalBusinessSchema,
+} from "@/components/programmatic/SchemaMarkup";
+import CityPageClient from "./CityPageClient";
+
+interface PageProps {
+  params: Promise<{ service: string; country: string; city: string }>;
+}
+
+export async function generateStaticParams() {
+  return getAllCityParams();
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const {
+    service: serviceSlug,
+    country: countrySlug,
+    city: citySlug,
+  } = await params;
+  const service = getServiceContent(serviceSlug);
+  const result = getCity(countrySlug, citySlug);
+  if (!service || !result) return {};
+
+  const { city, country } = result;
+  const title = `${service.title} Services in ${city.name} | ${SITE.name}`;
+  const description = `Expert ${service.metaKeyword} in ${city.name}, ${country.name}. Boost rankings for your ${city.name} business. Free audit + transparent pricing. Contact us today!`;
+  const url = `${SITE.url}/services/${serviceSlug}/${countrySlug}/${citySlug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: SITE.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
+
+export default async function CityPage({ params }: PageProps) {
+  const {
+    service: serviceSlug,
+    country: countrySlug,
+    city: citySlug,
+  } = await params;
+
+  const service = getServiceContent(serviceSlug);
+  const result = getCity(countrySlug, citySlug);
+  if (!service || !result) notFound();
+
+  const { city, country } = result;
+  const content = generateCityPageContent(service, city, country);
+  const nearbyCities = getNearbyCities(country, citySlug, 20);
+  const orchestration = orchestrateCitySections(service, city, country);
+
+  return (
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: SITE.url },
+          { name: "Services", url: `${SITE.url}/services` },
+          {
+            name: service.title,
+            url: `${SITE.url}/services/${serviceSlug}`,
+          },
+          {
+            name: country.name,
+            url: `${SITE.url}/services/${serviceSlug}/${countrySlug}`,
+          },
+          {
+            name: city.name,
+            url: `${SITE.url}/services/${serviceSlug}/${countrySlug}/${citySlug}`,
+          },
+        ]}
+      />
+      <ServiceSchema
+        serviceName={`${service.title} Services in ${city.name}`}
+        description={content.aboutParagraphs[0]}
+        areaServed={{
+          type: "City",
+          name: city.name,
+          country: country.name,
+        }}
+      />
+      <FAQSchema faqs={content.faqs} />
+      <LocalBusinessSchema
+        cityName={city.name}
+        countryName={country.name}
+      />
+
+      <CityPageClient
+        service={{
+          slug: service.slug,
+          title: service.title,
+          shortTitle: service.shortTitle,
+          features: service.includedItems,
+          processSteps: service.processSteps,
+          stats: service.stats,
+        }}
+        city={{ name: city.name, slug: city.slug }}
+        country={{ name: country.name, slug: country.slug }}
+        content={content}
+        nearbyCities={nearbyCities.map((c) => ({
+          name: c.name,
+          slug: c.slug,
+        }))}
+        orchestration={orchestration}
+      />
+    </>
+  );
+}

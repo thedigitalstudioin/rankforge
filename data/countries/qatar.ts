@@ -1,0 +1,135 @@
+import type { CountryData } from "../types";
+
+export const qatar: CountryData = {
+  name: "Qatar",
+  slug: "qatar",
+  flag: "🇶🇦",
+  code: "QA",
+  searchEngine: "Google.com.qa",
+  language: "Arabic/English",
+  currency: "QAR",
+  marketSize: "a high-income digital market with the world's highest GDP per capita",
+  internetPenetration: "99%",
+  mobileSearchShare: "76%",
+  topIndustries: [
+    "Oil and natural gas (LNG)",
+    "Financial services",
+    "Construction and real estate",
+    "Sports and events",
+    "Education and research",
+    "Aviation (Qatar Airways)",
+  ],
+  localSearchTrends:
+    "Qatar's highly connected population searches in both Arabic and English; luxury brands and premium services dominate search queries; expatriate community drives diverse multilingual searches",
+  uniqueMarketFact:
+    "Qatar has the highest GDP per capita in the world and a population that is over 85% expatriate, creating a uniquely international and affluent digital market",
+  cities: [
+    {
+      name: "Doha",
+      slug: "doha",
+      population: "2.4 million",
+      populationRank: "the capital and home to over 80% of Qatar's population",
+      economy: [
+        "Natural gas and LNG (QatarEnergy)",
+        "Financial services and banking",
+        "Real estate and construction",
+        "Sports and mega-events",
+        "Aviation hub (Qatar Airways/Hamad International Airport)",
+        "Media (Al Jazeera headquarters)",
+      ],
+      knownFor: [
+        "2022 FIFA World Cup host city",
+        "The Pearl-Qatar luxury island",
+        "Museum of Islamic Art",
+        "Souq Waqif traditional market",
+        "Education City (6 international university branches)",
+        "Al Jazeera global headquarters",
+      ],
+      searchBehavior:
+        "Luxury real estate and premium lifestyle searches are dominant; post-World Cup sports tourism queries remain strong; education and career searches reflect the expatriate-heavy population",
+      competitionLevel: "very high",
+      digitalMaturity: "highly mature",
+      localPlatforms: ["Qatar Living", "Mzad Qatar", "Snoonu", "Rafeeq"],
+      businessTypes: [
+        "Energy companies",
+        "Luxury real estate developers",
+        "Financial services firms",
+        "Sports and event management",
+        "Aviation services",
+        "International schools and universities",
+        "Premium hospitality",
+      ],
+      uniqueFact:
+        "Doha built eight stadiums and an entirely new city district (Lusail) to host the 2022 FIFA World Cup, the first World Cup held in the Middle East",
+      nearbyMajorCities: ["al-wakrah", "al-khor"],
+    },
+    {
+      name: "Al Wakrah",
+      slug: "al-wakrah",
+      population: "300,000",
+      populationRank: "the second-largest city in Qatar",
+      economy: [
+        "Fishing and maritime heritage",
+        "Oil and gas support services",
+        "Residential development",
+        "Sports and recreation",
+        "Retail and commerce",
+      ],
+      knownFor: [
+        "Al Janoub Stadium (2022 World Cup venue designed by Zaha Hadid)",
+        "Traditional fishing village heritage",
+        "Al Wakrah Souq (restored traditional market)",
+        "Rapidly expanding residential districts",
+        "Beachfront promenade",
+      ],
+      searchBehavior:
+        "Real estate and new housing searches are growing as the city expands; family-oriented service and school searches reflect the residential character; heritage tourism queries are steady",
+      competitionLevel: "growing",
+      digitalMaturity: "growing",
+      businessTypes: [
+        "Real estate agencies",
+        "Family services and education",
+        "Fishing and seafood businesses",
+        "Retail and dining",
+        "Construction companies",
+      ],
+      uniqueFact:
+        "Al Wakrah's Zaha Hadid-designed Al Janoub Stadium was inspired by the sails of traditional dhow boats, honoring the city's centuries-old pearl diving and fishing heritage",
+      nearbyMajorCities: ["doha"],
+    },
+    {
+      name: "Al Khor",
+      slug: "al-khor",
+      population: "200,000",
+      populationRank: "a growing northern city with industrial significance",
+      economy: [
+        "Natural gas processing (Ras Laffan Industrial City nearby)",
+        "Pearl diving heritage tourism",
+        "Fishing industry",
+        "Residential expansion",
+        "Sports infrastructure",
+      ],
+      knownFor: [
+        "Al Bayt Stadium (2022 World Cup venue shaped like a Bedouin tent)",
+        "Proximity to Ras Laffan Industrial City (world's largest LNG hub)",
+        "Al Khor Towers historical site",
+        "Mangrove forests and natural reserves",
+        "Pearl diving heritage",
+      ],
+      searchBehavior:
+        "Energy industry job and service searches dominate due to Ras Laffan proximity; nature and ecotourism queries are growing; residential real estate searches reflect expansion",
+      competitionLevel: "emerging",
+      digitalMaturity: "growing",
+      businessTypes: [
+        "Energy sector contractors",
+        "Industrial services",
+        "Residential developers",
+        "Nature tourism operators",
+        "Fishing and marine services",
+      ],
+      uniqueFact:
+        "Al Khor sits near Ras Laffan Industrial City, the world's largest liquefied natural gas production hub, which processes a significant share of global LNG exports",
+      nearbyMajorCities: ["doha"],
+    },
+  ],
+};
