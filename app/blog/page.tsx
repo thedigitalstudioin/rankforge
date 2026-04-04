@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Calendar, ArrowRight, Send } from "lucide-react";
+import { Clock, Calendar, ArrowRight, Send, CheckCircle } from "lucide-react";
 import { BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/constants";
 import GlassCard from "@/components/ui/GlassCard";
 import GradientButton from "@/components/ui/GradientButton";
@@ -19,6 +19,36 @@ const categoryGradients: Record<string, string> = {
 
 export default function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", website: "" });
+
+  const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormError("");
+    if (!formData.name.trim()) { setFormError("Full name is required."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) { setFormError("Valid email is required."); return; }
+    if (formData.phone.replace(/\D/g, "").length < 10) { setFormError("Phone must have at least 10 digits."); return; }
+    if (!/^https?:\/\//.test(formData.website)) { setFormError("Website must start with http:// or https://"); return; }
+
+    setLoading(true);
+    try {
+      await fetch("https://formsubmit.co/ajax/4036c2247fbd93c09537e42d154efe39", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: "New Blog Newsletter Lead — RankForge",
+          Name: formData.name, Email: formData.email,
+          Phone: formData.phone, Website: formData.website,
+          "Form Type": "blog-newsletter", _template: "table",
+        }),
+      });
+      setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", website: "" });
+    } catch { setFormError("Something went wrong. Please try again."); }
+    setLoading(false);
+  };
 
   const featuredPost = BLOG_POSTS[0];
   const remainingPosts = BLOG_POSTS.slice(1);
@@ -239,21 +269,28 @@ export default function BlogPage() {
                 className="mb-8"
               />
 
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto"
-              >
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  className="flex-1 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all"
-                />
-                <GradientButton type="submit" variant="primary" size="md">
-                  <Send className="w-4 h-4 mr-2" />
-                  Subscribe
-                </GradientButton>
-              </form>
+              {submitted ? (
+                <div className="flex items-center justify-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-success" />
+                  <span className="text-lg font-semibold text-text-primary">Thank you! We&apos;ll be in touch soon.</span>
+                </div>
+              ) : (
+                <form onSubmit={handleNewsletterSubmit} className="max-w-lg mx-auto space-y-3">
+                  {formError && <p className="text-tertiary text-sm text-center">{formError}</p>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" placeholder="Full Name *" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm" />
+                    <input type="email" placeholder="Email Address *" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm" />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="tel" placeholder="Phone Number *" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm" />
+                    <input type="url" placeholder="Website URL *" required value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm" />
+                  </div>
+                  <GradientButton type="submit" variant="primary" size="md" loading={loading} className="w-full sm:w-auto">
+                    <Send className="w-4 h-4 mr-2" />
+                    {loading ? "Submitting..." : "Subscribe"}
+                  </GradientButton>
+                </form>
+              )}
             </div>
           </motion.div>
         </div>
