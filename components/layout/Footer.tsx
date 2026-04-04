@@ -6,16 +6,35 @@ import { Globe, ExternalLink, Send } from "lucide-react";
 import { SITE, NAV_LINKS, SERVICES } from "@/lib/constants";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [footerError, setFooterError] = useState("");
+  const [footerData, setFooterData] = useState({ name: "", email: "", phone: "", website: "" });
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    setFooterError("");
+    if (!footerData.name.trim()) { setFooterError("Name is required."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(footerData.email)) { setFooterError("Valid email is required."); return; }
+    if (footerData.phone.replace(/\D/g, "").length < 10) { setFooterError("Phone must have 10+ digits."); return; }
+    if (!/^https?:\/\//.test(footerData.website)) { setFooterError("Website must start with http(s)://"); return; }
+
+    setLoading(true);
+    try {
+      await fetch("https://formsubmit.co/ajax/4036c2247fbd93c09537e42d154efe39", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: "New Footer Lead — RankForge",
+          Name: footerData.name, Email: footerData.email,
+          Phone: footerData.phone, Website: footerData.website,
+          "Form Type": "footer-newsletter", _template: "table",
+        }),
+      });
       setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 4000);
-    }
+      setFooterData({ name: "", email: "", phone: "", website: "" });
+    } catch { setFooterError("Failed. Try again."); }
+    setLoading(false);
   };
 
   return (
@@ -31,26 +50,25 @@ export default function Footer() {
               Get weekly SEO insights, tips, and strategies delivered to your inbox.
             </p>
           </div>
-          <form
-            onSubmit={handleNewsletterSubmit}
-            className="flex w-full md:w-auto gap-2"
-          >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="w-full md:w-72 px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
-            />
-            <button
-              type="submit"
-              className="flex-shrink-0 px-5 py-2.5 rounded-lg bg-primary text-white font-semibold text-sm transition-all duration-300 hover:bg-primary/80 glow-primary flex items-center gap-2"
-            >
-              <Send size={16} />
-              {subscribed ? "Sent!" : "Subscribe"}
-            </button>
-          </form>
+          {subscribed ? (
+            <p className="text-success text-sm font-semibold">Thank you! We&apos;ll be in touch soon.</p>
+          ) : (
+            <form onSubmit={handleNewsletterSubmit} className="w-full md:w-auto space-y-2">
+              {footerError && <p className="text-tertiary text-xs">{footerError}</p>}
+              <div className="flex flex-wrap gap-2">
+                <input type="text" value={footerData.name} onChange={(e) => setFooterData({ ...footerData, name: e.target.value })} placeholder="Full Name *" required className="w-full sm:w-36 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-primary/50 transition-all" />
+                <input type="email" value={footerData.email} onChange={(e) => setFooterData({ ...footerData, email: e.target.value })} placeholder="Email *" required className="w-full sm:w-44 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-primary/50 transition-all" />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <input type="tel" value={footerData.phone} onChange={(e) => setFooterData({ ...footerData, phone: e.target.value })} placeholder="Phone *" required className="w-full sm:w-36 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-primary/50 transition-all" />
+                <input type="url" value={footerData.website} onChange={(e) => setFooterData({ ...footerData, website: e.target.value })} placeholder="Website *" required className="w-full sm:w-44 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-primary/50 transition-all" />
+                <button type="submit" className="flex-shrink-0 px-5 py-2.5 rounded-lg bg-primary text-white font-semibold text-sm transition-all duration-300 hover:bg-primary/80 glow-primary flex items-center gap-2">
+                  <Send size={16} />
+                  {loading ? "..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
 
