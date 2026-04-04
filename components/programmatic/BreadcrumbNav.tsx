@@ -11,7 +11,7 @@ export default function BreadcrumbNav({
   items: BreadcrumbItem[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="py-4">
+    <nav aria-label="Breadcrumb" className="pt-24 pb-4">
       <ol className="flex flex-wrap items-center gap-2 text-sm text-text-muted">
         {items.map((item, i) => (
           <li key={i} className="flex items-center gap-2">
