@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# github actions workflows (kept locally, push requires workflow-scoped PAT)
+.github/workflows/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
