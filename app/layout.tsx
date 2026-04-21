@@ -58,9 +58,9 @@ export const metadata: Metadata = {
     creator: "@rankforge",
   },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
   },
 };
 
